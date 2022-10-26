@@ -1,7 +1,7 @@
 package com.ecommer.backend.model;
 
 import com.ecommer.backend.profile.Authority;
-import com.ecommer.backend.profile.SystemUser;
+import com.ecommer.backend.profile.SysUserDetails;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Employee extends SystemUser {
+public class Employee extends SysUserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,9 +24,6 @@ public class Employee extends SystemUser {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Authority jobFunction;
-
-    
-
 
 }
 

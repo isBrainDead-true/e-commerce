@@ -1,7 +1,7 @@
 package com.ecommer.backend.model;
 
 import com.ecommer.backend.profile.Authority;
-import com.ecommer.backend.profile.SystemUser;
+import com.ecommer.backend.profile.SysUserDetails;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Customer extends SystemUser {
+public class Customer extends SysUserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
