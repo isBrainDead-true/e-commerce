@@ -8,25 +8,28 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
-public class SystemUser implements UserDetails {
+public class SysUserDetails implements UserDetails {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String username;
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Authority role;
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "system_user_authority",
+            joinColumns = {@JoinColumn(name = "SYSTEM_USER_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})
+    private Set<Authority> authorities;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -15,8 +15,8 @@ public class Authority implements GrantedAuthority {
     private Long id;
     private String role;
 
-    @ManyToMany
-    private Set<SystemUser> users;
+    @ManyToOne(targetEntity = SysUserDetails.class)
+    private Set<SysUserDetails> users;
 
     @Override
     public String getAuthority() {
