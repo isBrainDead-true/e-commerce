@@ -1,4 +1,4 @@
-package com.ecommer.backend.config;
+package com.ecommer.backend.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -6,7 +6,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -16,8 +15,19 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.authorizeRequests().anyRequest().permitAll()
-                .and().httpBasic().and().build();
+
+        //Allow H2 Database Connection
+        http.authorizeRequests().antMatchers("/h2-console/**");
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
+
+        //Normal Filter Chain
+        http
+                .authorizeRequests()
+                .anyRequest().permitAll()
+                .and();
+
+        return http.build();
     }
 
     @Bean
