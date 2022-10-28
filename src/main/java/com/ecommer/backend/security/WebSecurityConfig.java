@@ -41,7 +41,8 @@ public class WebSecurityConfig {
         final String[] allowed_resources = {
                 "/api/v1/login",
                 "/h2-console/**",
-                "/api/v1/customer/register"
+                "/api/v1/customer/register",
+                "/api/v1/customer/get/user"
         };
 
         //Resolving CORS

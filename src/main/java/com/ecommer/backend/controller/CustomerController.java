@@ -3,6 +3,7 @@ package com.ecommer.backend.controller;
 import com.ecommer.backend.model.Customer;
 import com.ecommer.backend.service.CustomerService;
 import com.ecommer.backend.service.CurrentUserService;
+import com.ecommer.backend.session.InMemorySessionRegistry;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ public class CustomerController {
 
     private final CustomerService service;
     private final CurrentUserService sysService;
+    private final InMemorySessionRegistry registry;
 
     @PostMapping("/register")
     public ResponseEntity<Customer> create(@RequestBody Customer customer){
@@ -32,21 +34,12 @@ public class CustomerController {
         return new ResponseEntity<Customer>(cstm.get(), HttpStatus.OK);
     }
 
-    @GetMapping("/get/{username}")
-    public ResponseEntity<Customer> readByUsername(@RequestParam String username){
+    @GetMapping("/get/user/{sessionId}")
+    public ResponseEntity<Customer> readByUsername(@PathVariable("sessionId") String sessionId){
+        String username = registry.getUsernameForSession(sessionId);
         Customer cstm = service.loadUserByUsername(username);
         return new ResponseEntity<Customer>(cstm, HttpStatus.OK);
     }
-
-    @GetMapping("/auth/{username}/{password}")
-    public boolean auth(@RequestParam String username, String password){
-
-        System.out.println(username);
-        System.out.printf(password);
-
-        return true;
-    }
-
 
     @PatchMapping("/update")
     public ResponseEntity<Customer> update(@RequestBody Customer customer){
