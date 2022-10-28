@@ -15,7 +15,7 @@ public class UserInMemoryRepository {
         System.out.println(REGISTERED_USERS);
         System.out.println("Username: " + username);
         System.out.println("Objeto: "+ REGISTERED_USERS.get("user1"));
-        return REGISTERED_USERS.get("user1");
+        return REGISTERED_USERS.get(username);
     }
 
     @PostConstruct

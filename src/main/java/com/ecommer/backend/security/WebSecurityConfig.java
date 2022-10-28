@@ -54,7 +54,7 @@ public class WebSecurityConfig {
         http
                 .authorizeRequests()
                 .antMatchers("/api/v1/login").permitAll()
-                .anyRequest().permitAll();
+                .anyRequest().authenticated();
 
         http.addFilterBefore(sessionFilter, UsernamePasswordAuthenticationFilter.class);
 
