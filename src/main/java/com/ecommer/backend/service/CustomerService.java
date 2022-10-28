@@ -35,4 +35,7 @@ public class CustomerService {
         return customers;
     }
 
+    public Customer loadUserByUsername(String username) {
+        return this.repository.findByUsername(username);
+    }
 }

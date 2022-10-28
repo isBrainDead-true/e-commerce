@@ -2,6 +2,7 @@ package com.ecommer.backend.controller;
 
 import com.ecommer.backend.model.Customer;
 import com.ecommer.backend.service.CustomerService;
+import com.ecommer.backend.service.CurrentUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.Optional;
 public class CustomerController {
 
     private final CustomerService service;
+    private final CurrentUserService sysService;
 
     @PostMapping("/register")
     public ResponseEntity<Customer> create(@RequestBody Customer customer){
@@ -28,8 +30,17 @@ public class CustomerController {
     public ResponseEntity<Customer> read(@RequestParam Long id){
         Optional<Customer> cstm = service.read(id);
         return new ResponseEntity<Customer>(cstm.get(), HttpStatus.OK);
-
     }
+
+    @GetMapping("/auth/{username}/{password}")
+    public boolean auth(@RequestParam String username, String password){
+
+        System.out.println(username);
+        System.out.printf(password);
+
+        return true;
+    }
+
 
     @PatchMapping("/update")
     public ResponseEntity<Customer> update(@RequestBody Customer customer){

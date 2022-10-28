@@ -1,52 +1,82 @@
 package com.ecommer.backend.security;
 
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import com.ecommer.backend.service.CurrentUserService;
+import com.ecommer.backend.session.SessionFilter;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.authentication.configuration.GlobalAuthenticationConfigurerAdapter;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.util.Arrays;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@AllArgsConstructor
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
+
+    private final CurrentUserService service;
+    private final SessionFilter sessionFilter;
+
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+        auth.userDetailsService(service).passwordEncoder(passwordEncoder());
+    }
 
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         //Resolving CORS
-        http.csrf().disable().cors();
+        http.cors().and().csrf().disable();
+
+        //Exception Handling
+        http.exceptionHandling().authenticationEntryPoint((request, response, authException)
+                -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage())).and();
+
 
         //Allow H2 Database Connection
-        http.authorizeRequests().antMatchers("/h2-console/**");
-        http.headers().frameOptions().disable();
+       // http.authorizeRequests().antMatchers("/h2-console/**");
+        //http.headers().frameOptions().disable();
 
         //Normal Filter Chain
         http
                 .authorizeRequests()
-                .anyRequest().permitAll()
-                .and();
+                .antMatchers("/api/v1/login").permitAll()
+                .anyRequest().permitAll();
 
-        return http.build();
+        http.addFilterBefore(sessionFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return http.httpBasic().and().build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        final List<GlobalAuthenticationConfigurerAdapter> configurers = new ArrayList<>();
+        configurers.add(new GlobalAuthenticationConfigurerAdapter() {
+                            @Override
+                            public void configure(AuthenticationManagerBuilder auth) throws Exception {
+                                auth.userDetailsService(service).passwordEncoder(passwordEncoder());
+                            }
+                        }
+        );
+        return authConfig.getAuthenticationManager();
     }
 
 

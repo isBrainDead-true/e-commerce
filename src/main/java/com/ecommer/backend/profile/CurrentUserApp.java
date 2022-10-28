@@ -15,8 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
-public class SysUserDetails implements UserDetails {
-
+public class CurrentUserApp implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
