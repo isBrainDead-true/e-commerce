@@ -32,6 +32,12 @@ public class CustomerController {
         return new ResponseEntity<Customer>(cstm.get(), HttpStatus.OK);
     }
 
+    @GetMapping("/get/{username}")
+    public ResponseEntity<Customer> readByUsername(@RequestParam String username){
+        Customer cstm = service.loadUserByUsername(username);
+        return new ResponseEntity<Customer>(cstm, HttpStatus.OK);
+    }
+
     @GetMapping("/auth/{username}/{password}")
     public boolean auth(@RequestParam String username, String password){
 

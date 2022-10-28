@@ -38,6 +38,12 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
+        final String[] allowed_resources = {
+                "/api/v1/login",
+                "/h2-console/**",
+                "/api/v1/customer/register"
+        };
+
         //Resolving CORS
         http.cors().and().csrf().disable();
 
@@ -53,8 +59,9 @@ public class WebSecurityConfig {
         //Normal Filter Chain
         http
                 .authorizeRequests()
-                .antMatchers("/api/v1/login").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers(allowed_resources).permitAll()
+                .anyRequest().authenticated()
+                .and().headers().frameOptions().disable();;
 
         http.addFilterBefore(sessionFilter, UsernamePasswordAuthenticationFilter.class);
 

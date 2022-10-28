@@ -3,6 +3,7 @@ package com.ecommer.backend.service;
 import com.ecommer.backend.model.Customer;
 import com.ecommer.backend.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,8 @@ public class CustomerService {
     private final CustomerRepository repository;
 
     public Customer create(Customer customer){
+        String EncryptedPassword = new BCryptPasswordEncoder().encode(customer.getPassword());
+        customer.setPassword(EncryptedPassword);
         return this.repository.save(customer);
     }
 

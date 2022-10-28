@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface SysUserRepository extends JpaRepository<CurrentUserApp, Long> {
 
-    Optional<CurrentUserApp> findByUsername(String username);
+    CurrentUserApp findByUsername(String username);
 
 }
