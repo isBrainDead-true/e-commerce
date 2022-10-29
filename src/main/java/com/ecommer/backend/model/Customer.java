@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -27,6 +28,10 @@ public class Customer extends CurrentUserApp {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Authority role;
+
+    @OneToMany
+    private List<Pedido> pedidos;
+
 
 
 }
