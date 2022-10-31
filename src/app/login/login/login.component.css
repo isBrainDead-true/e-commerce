@@ -90,5 +90,5 @@
 }
 
 .ng-invalid.ng-touched:not(form){
-    border: 2px solid red;
+    border: 2px solid rgb(248,215,218)
 }

@@ -5,10 +5,12 @@
 
 }
 
-.form{
-    flex-direction: row;
-}
+
 
 .ng-invalid.ng-touched:not(form){
     border: 2px solid red;
+}
+
+fleft{
+    float: left;
 }

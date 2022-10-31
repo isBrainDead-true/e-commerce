@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+
 
 @Component({
   selector: 'app-profile',
@@ -8,6 +10,12 @@ import { Component, OnInit } from '@angular/core';
 export class ProfileComponent implements OnInit {
 
   constructor() { }
+
+  cep: string = "";
+
+  consultaCEP(): any{
+    console.log(this.cep);
+  }
 
   ngOnInit(): void {
   }

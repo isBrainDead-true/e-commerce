@@ -1,9 +1,8 @@
 import { RequestInterceptor } from './request.interceptor';
-import { Customer } from './model/Customer';
 
 import { HttpClientModule, HttpHandler, HttpInterceptor, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Injectable, NgModule } from '@angular/core';
-import { FormBuilder, FormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,7 +14,7 @@ import { HomeComponent } from './customer/home/home.component';
 import { ProdutosComponent } from './customer/produtos/produtos.component';
 import { CustomerService } from './services/customer.service';
 import { ProfileComponent } from './customer/profile/profile.component';
-import { RouterStateSnapshot } from '@angular/router';
+
 
 
 @NgModule({
@@ -30,11 +29,16 @@ import { RouterStateSnapshot } from '@angular/router';
   ],
   imports: [
     FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [CustomerService, FormsModule, FormBuilder, {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true}],
+  exports: [
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  providers: [CustomerService, NgModel, FormsModule, FormBuilder, {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
