@@ -88,3 +88,7 @@
     transition-timing-function: ease-in-out;
     transition-duration: 0.5s;
 }
+
+.ng-invalid.ng-touched:not(form){
+    border: 2px solid red;
+}
