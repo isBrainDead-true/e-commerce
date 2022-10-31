@@ -1,0 +1,32 @@
+<nav *ngIf="display" class="navbar d-flex align-items-end justify-content-end container-fluid navbar-expand-lg navbar-light-purple">
+    <div class="container-fluid d-flex">
+
+    </div>
+    <div >
+      <div  id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex ">
+
+          <li class="nav-item me-4">
+              <a class="nav-link active" aria-current="page" routerLink="">Home</a>
+          </li> 
+
+          <li class="nav-item me-4">
+            <a class="nav-link" href="#">About</a>
+          </li>
+
+          <li class="nav-item me-4">
+            <a class="nav-link" href="#">Services</a>
+          </li>
+
+          <li class="nav-item me-4">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+
+          <li class="nav-item me-4">
+            <a class="nav-link btn-login-round"routerLink="/login" (click)="hide()" routerLinkActive="active" >Login</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </nav>

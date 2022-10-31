@@ -1,0 +1,13 @@
+.produtos{
+
+}
+
+.card{
+    float: left;
+}
+
+.valor{
+    color:  rgb(255,101,0);
+    font-weight: bold;
+    font-size: 13pt;
+}

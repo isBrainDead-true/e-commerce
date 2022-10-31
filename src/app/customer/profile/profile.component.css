@@ -1,0 +1,17 @@
+.container{
+   
+}
+
+.informacoes-contato{
+    
+}
+
+.row{
+    display: flex;
+    flex-direction: row;
+
+}
+
+.form{
+    flex-direction: row;
+}

@@ -1,0 +1,26 @@
+.main{
+    background: rgb(49,48,46);
+    height: 100vh;
+}
+
+.section-1{
+    color: white;
+}
+
+.article{
+    height: 100vh;
+}
+
+.title{
+    font-weight: bold;
+    font-size: 48pt;
+}
+
+.carousel{
+    width: 80%;
+}
+
+img{
+    width: 100%;
+    height: 100%;
+}

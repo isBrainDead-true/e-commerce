@@ -1,0 +1,17 @@
+<div class="produtos">
+
+  <div *ngFor="let prod of produtos" class="card me-3 mb-3" style="width: 18rem;">
+    <img [src]="prod.image" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{ prod.name }}</h5>
+      <p class="card-text">{{ prod.descricao }}</p>
+      <div class="slidecontainer">
+        <p>Quantidade:</p>
+        <input #qtde [id]="prod.id" [(ngModel)]="qtdeEscolhido" type="range" min="1"
+          [max]="prod.quantidadeEstoque" [value]="prod.valor"><span class="ms-4">{{ qtdeEscolhido }}</span>
+      </div>
+      <p class="valor card-text">{{ prod.valor * qtdeEscolhido | currency : 'BRL' }} </p>
+      <a href="#" class="btn btn-success">Adicionar ao carrinho</a>
+    </div>
+  </div>
+</div>

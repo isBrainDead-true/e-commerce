@@ -1,0 +1,54 @@
+.navbar-light-purple{
+    background-color: rgb(49,48,46);
+    height: 120px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15pt;
+    color: white;
+}
+
+ul{
+    text-align: center;
+    margin: 0 auto;
+}
+
+ul>li>a:not(.btn-login-round):hover{
+    color: white;
+    border-bottom: 5px solid white;
+}
+
+ul>li>a:hover{
+    color: white;
+}
+
+ul>li>a:visited{
+    color: white;
+}
+
+ul>li>a{
+    display: block;
+    height: 50px;
+}
+
+ul>li{
+    text-decoration: none;
+    
+}
+
+a{
+    color: white;
+}
+
+.btn-purple{
+    background-color: purple;
+    color: white;
+}
+
+.btn-login-round{
+    background-color: rgb(238, 0, 186);
+    width: 120px;
+    border-radius: 25px;
+}
+
+#btn:hover{
+    border: none;
+}
