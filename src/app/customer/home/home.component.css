@@ -38,11 +38,11 @@ body{
     width: 100%;
 }
 
-li>a:visited{
+ul>a:visited{
     color: white;
 }
 
-li>a{
+ul>a{
     text-decoration: none;
 }
 

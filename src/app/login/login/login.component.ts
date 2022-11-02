@@ -55,8 +55,8 @@ export class LoginComponent implements OnInit {
       }).subscribe(res => {
         if(res){
           this.sessionId = res.sessionID;
-          sessionStorage.setItem('token ', this.sessionId);
-          this.router.navigate(['customerpage']);
+          sessionStorage.setItem('token', this.sessionId);
+          this.router.navigate(['customerpage/c-profile']);
         }else{
           alert("Falha ao realizar o login");
         }

@@ -4,9 +4,9 @@
         <div class="col-10 ">
             <div class="Endereco">
                 <div class="form ">
-                    <form #f="ngForm" role="form">
+                    <form [formGroup]="formulario" #f="ngForm"ngDefaultControl name="myForm" id="formulario" role="form">
                         <div class="d-flex justify-content-end"><button type="submit"
-                                class="btn btn-success btn-login mt-4">Atualizar</button>
+                                class="btn btn-success btn-login mt-4" (click)="updateProfile()">Atualizar</button>
                         </div>
                         <fieldset>
                             <legend>Endereço</legend>
@@ -14,27 +14,27 @@
 
                                 <div class="col-3">
                                     <label for="cep" class="form-label">CEP</label>
-                                    <input ngModel #cep="ngModel" (blur)="consultaCEP(f, $event)" style="width: 170px;" type="text" name="cep" id="cep" class="form-control">
+                                    <input formControlName="cep" (blur)="consultaCEP($event)" style="width: 170px;" type="text" name="cep" id="cep" class="form-control">
                                 </div>
 
                                 <div class="col-6">
                                     <label for="rua" class="form-label">Bairro</label>
-                                    <input ngModel #bairro="ngModel" name="bairro" type="text" readonly name="bairro" class="form-control" id="bairro">
+                                    <input formControlName="bairro" name="bairro" type="text" readonly name="bairro" class="form-control" id="bairro">
                                 </div>
 
                                 <div class="col-3">
                                     <label for="rua" class="form-label">Estado</label>
-                                    <input ngModel #estado="ngModel" name="estado" type="text" readonly name="estado" class="form-control" id="estado">
+                                    <input formControlName="estado" name="estado" type="text" readonly name="estado" class="form-control" id="estado">
                                 </div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col-9">
                                     <label for="rua" class="form-label">Rua</label>
-                                    <input ngModel #rua="ngModel"  name="rua" type="text" readonly name="rua" class="form-control" id="rua">
+                                    <input formControlName="rua" name="rua" type="text" readonly name="rua" class="form-control" id="rua">
                                 </div>
                                 <div class="col-3">
                                     <label for="numero" class="form-label">Numero</label>
-                                    <input ngModel #numero="ngModel"  value="" name="numero" type="text" name="numero" class="form-control" id="numero">
+                                    <input formControlName="numero" value="" name="numero" type="text" name="numero" class="form-control" id="numero">
                                 </div>
                             </div>
                         </fieldset>
