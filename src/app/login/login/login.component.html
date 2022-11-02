@@ -78,7 +78,7 @@
                         <form #addForm="ngForm" (ngSubmit)="addUsuario(addForm)">
                             <div class="mb-3">
                                 <label for="Nome" class="form-label">Nome</label>
-                                <input type="text" #nome="ngModel" required class="form-control" ngModel name="nome" id="name">
+                                <input type="text" #nome="ngModel" required class="form-control" ngModel name="name" id="name">
                                 <div *ngIf="!nome.valid && nome.touched">
                                     <div class="mt-2 alert alert-danger" role="alert">
                                         O campo nome é obrigatório

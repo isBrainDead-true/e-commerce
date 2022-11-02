@@ -8,7 +8,6 @@ import { Form, FormBuilder, FormControl, NgForm, ReactiveFormsModule, FormGroup 
 import { getLocaleDayPeriods, JsonPipe } from '@angular/common';
 import { CustomerService } from 'src/app/services/customer.service';
 
-
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -16,7 +15,7 @@ import { CustomerService } from 'src/app/services/customer.service';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private http: HttpClient, 
+  constructor(private http: HttpClient,
     private fb: FormBuilder,
     private customerService: CustomerService) { }
 
@@ -29,7 +28,7 @@ export class ProfileComponent implements OnInit {
   })
 
   customerInUse: Customer = {
-    id: 0,
+    id: "",
     name: "",
     username: "",
     password: "",
@@ -71,11 +70,14 @@ export class ProfileComponent implements OnInit {
     let tkn = sessionStorage.getItem("token");
     this.http.get<Customer>(`http://localhost:8080/api/v1/customer/get/user/${tkn}`)
       .subscribe(response => {
+
+        this.customerInUse.id = response.id;
+        this.customerInUse.name = response.name
+        this.customerInUse.username = response.username;
+        this.customerInUse.password = response.password;
+
+
         if (response.address != null) {
-          this.customerInUse.id = response.id;
-          this.customerInUse.name = response.name
-          this.customerInUse.username = response.username;
-          this.customerInUse.password = response.password;
           this.customerInUse.address.zipcode = response.address.zipcode;
           this.customerInUse.address.street = response.address.street;
           this.customerInUse.address.number = response.address.number;
@@ -86,25 +88,25 @@ export class ProfileComponent implements OnInit {
           this.formulario.controls['bairro'].setValue(response.address.neighbor);
           this.formulario.controls['estado'].setValue(response.address.estate);
           this.formulario.controls['numero'].setValue(response.address.number);
-        }else{
+        } else {
           alert("Por gentileza complete o seu perfil")
         }
       }
       );
   }
 
-  updateProfile(){
+  updateProfile() {
     this.customerInUse.address.zipcode = this.formulario.controls['cep'].value || "";
     this.customerInUse.address.street = this.formulario.controls['rua'].value || "";
     this.customerInUse.address.number = this.formulario.controls['numero'].value || "";
     this.customerInUse.address.estate = this.formulario.controls['estado'].value || "";
     this.customerInUse.address.neighbor = this.formulario.controls['bairro'].value || "";
 
-    this.customerService.updateCustomerInfo(this.customerInUse).subscribe(
+    this.customerService.updateCustomerInfo(this.customerInUse.id, this.customerInUse).subscribe(
       (Response: Customer) => { alert("dados alterados com sucesso") },
       (error: HttpErrorResponse) => { }
     );
-    console.log(this.customerInUse)
+    console.log(this.customerInUse.id)
   }
 
 
