@@ -2,7 +2,7 @@ import { RequestInterceptor } from './request.interceptor';
 
 import { HttpClientModule, HttpHandler, HttpInterceptor, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Injectable, NgModule } from '@angular/core';
-import { FormBuilder, FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, NgModel, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -36,7 +36,7 @@ import { ProfileComponent } from './customer/profile/profile.component';
   ],
   exports: [
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [CustomerService, NgModel, FormsModule, FormBuilder, {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true}],
   bootstrap: [AppComponent]
