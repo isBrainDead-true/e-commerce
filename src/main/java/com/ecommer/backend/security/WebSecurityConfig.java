@@ -42,7 +42,10 @@ public class WebSecurityConfig {
                 "/api/v1/login",
                 "/h2-console/**",
                 "/api/v1/customer/register",
-                "/api/v1/customer/get/user"
+                "/api/v1/customer/get/user",
+                "/api/v1/produto/new",
+                "/api/v1/produto/all",
+                "/api/v1/customer/update/profile/**"
         };
 
         //Resolving CORS
@@ -54,7 +57,7 @@ public class WebSecurityConfig {
 
 
         //Allow H2 Database Connection
-       // http.authorizeRequests().antMatchers("/h2-console/**");
+        //http.authorizeRequests().antMatchers("/h2-console/**");
         //http.headers().frameOptions().disable();
 
         //Normal Filter Chain

@@ -41,9 +41,17 @@ public class CustomerController {
         return new ResponseEntity<Customer>(cstm, HttpStatus.OK);
     }
 
-    @PatchMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<Customer> update(@RequestBody Customer customer){
         Customer cstm = service.create(customer);
+        return new ResponseEntity<Customer>(cstm, HttpStatus.OK);
+    }
+
+    @PutMapping("/update/profile/{id}")
+    public ResponseEntity<Customer> info(@PathVariable String id, @RequestBody Customer customer){
+        Long idCliente = Long.parseLong(id);
+        System.out.println(customer);
+        Customer cstm = service.update(idCliente, customer);
         return new ResponseEntity<Customer>(cstm, HttpStatus.OK);
     }
 

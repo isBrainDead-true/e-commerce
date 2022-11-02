@@ -25,8 +25,10 @@ public class CustomerService {
         return this.repository.findById(id);
     }
 
-    public Customer update(Customer customer){
-        return this.repository.save(customer);
+    public Customer update(Long id, Customer atualizado){
+        Optional<Customer> tmp = read(id);
+        tmp.get().setAddress(atualizado.getAddress());
+        return this.repository.save(tmp.get());
     }
 
     public void delete(Long id){
