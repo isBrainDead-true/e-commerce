@@ -14,6 +14,10 @@ import { HomeComponent } from './customer/home/home.component';
 import { ProdutosComponent } from './customer/produtos/produtos.component';
 import { CustomerService } from './services/customer.service';
 import { ProfileComponent } from './customer/profile/profile.component';
+import { DEFAULT_CURRENCY_CODE, LOCALE_ID } from '@angular/core';
+import ptBr from '@angular/common/locales/pt';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(ptBr);
 
 
 
@@ -38,7 +42,10 @@ import { ProfileComponent } from './customer/profile/profile.component';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [CustomerService, NgModel, NgForm, FormsModule, FormBuilder, {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true}],
+  providers: [CustomerService, NgModel, NgForm, FormsModule, FormBuilder, { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }, { provide: LOCALE_ID, useValue: 'pt' }, {
+    provide: DEFAULT_CURRENCY_CODE,
+    useValue: 'BRL',
+  },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -24,7 +24,10 @@ export class ProfileComponent implements OnInit {
     rua: "",
     bairro: [''],
     estado: [''],
-    numero: ['']
+    numero: [''],
+    email: [''],
+    cpf: [''],
+    telefone: ['']
   })
 
   customerInUse: Customer = {
@@ -32,6 +35,9 @@ export class ProfileComponent implements OnInit {
     name: "",
     username: "",
     password: "",
+    email: "",
+    cpf: "",
+    phone: "",
     address: {
       zipcode: "",
       street: "",
@@ -55,7 +61,7 @@ export class ProfileComponent implements OnInit {
 
   fillform(dados: endereco): void {
     setTimeout(() => {
-      this.formulario.setValue({
+      this.formulario.patchValue({
         cep: dados.cep,
         bairro: dados.bairro,
         estado: dados.uf,
@@ -76,6 +82,20 @@ export class ProfileComponent implements OnInit {
         this.customerInUse.username = response.username;
         this.customerInUse.password = response.password;
 
+        if (response.cpf != null) {
+          this.formulario.controls['cpf'].setValue(response.cpf);
+          this.customerInUse.cpf = response.cpf;
+        }
+
+        if (response.email != null) {
+          this.formulario.controls['email'].setValue(response.email);
+          this.customerInUse.email = response.email;
+        }
+
+        if (response.phone != null) {
+          this.customerInUse.phone = response.phone;
+          this.formulario.controls['telefone'].setValue(response.phone);
+        }
 
         if (response.address != null) {
           this.customerInUse.address.zipcode = response.address.zipcode;
@@ -83,11 +103,14 @@ export class ProfileComponent implements OnInit {
           this.customerInUse.address.number = response.address.number;
           this.customerInUse.address.neighbor = response.address.neighbor;
           this.customerInUse.address.estate = response.address.estate;
+
           this.formulario.controls['cep'].setValue(response.address.zipcode);
           this.formulario.controls['rua'].setValue(response.address.street);
           this.formulario.controls['bairro'].setValue(response.address.neighbor);
           this.formulario.controls['estado'].setValue(response.address.estate);
           this.formulario.controls['numero'].setValue(response.address.number);
+
+
         } else {
           alert("Por gentileza complete o seu perfil")
         }
@@ -101,12 +124,16 @@ export class ProfileComponent implements OnInit {
     this.customerInUse.address.number = this.formulario.controls['numero'].value || "";
     this.customerInUse.address.estate = this.formulario.controls['estado'].value || "";
     this.customerInUse.address.neighbor = this.formulario.controls['bairro'].value || "";
+    this.customerInUse.email = this.formulario.controls['email'].value || "";
+    this.customerInUse.cpf = this.formulario.controls['cpf'].value || "";
+    this.customerInUse.phone = this.formulario.controls['telefone'].value || "";
+
 
     this.customerService.updateCustomerInfo(this.customerInUse.id, this.customerInUse).subscribe(
       (Response: Customer) => { alert("dados alterados com sucesso") },
       (error: HttpErrorResponse) => { }
     );
-    console.log(this.customerInUse.id)
+    console.log(this.customerInUse)
   }
 
 
