@@ -42,7 +42,6 @@ export class LoginComponent implements OnInit {
     document.getElementById("close")?.click();
     this.customerService.AddCustomer(addForm.value).subscribe(
       (Response: Customer) => {
-
         let btn = document.getElementById('btnAccountCreated');
         btn?.click();
 

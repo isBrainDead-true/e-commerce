@@ -1,3 +1,4 @@
+import { NgForm, FormBuilder } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { produto } from 'src/app/model/produto';
@@ -16,8 +17,17 @@ export class ProdutosComponent implements OnInit {
   produtos: produto[] = [];
   prod: produto | any;
   bootstrap: any;
+  cart: produto[] = [];
 
-  constructor(private service: ProdutoService) { }
+  formulario = this.fb.group({
+    id: [''],
+    nome: [''],
+    quantidade: [''],
+    valor: [''],
+    quantidadeEstoque: [''],
+  })
+
+  constructor(private service: ProdutoService, private fb: FormBuilder) { }
 
   getProdutos(): void {
     this.service.getProdutos().subscribe(
@@ -32,17 +42,30 @@ export class ProdutosComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProdutos();
+    console.log(this.cart);
   }
 
 
-  adicionarAoCarrinho(input: any): void {
+  adicionarAoCarrinho(itemCarrinho: NgForm): void {
     var toastElList = [].slice.call(document.querySelectorAll('.toast'))
     var toastList = toastElList.map(function (toastEl) {
       return new bootstrap.Toast(toastEl).show();
     })
 
-    console.log(input)
+    let item: produto = {
+      id: '',
+      nome: '',
+      image: '',
+      descricao: '',
+      quantidade: 0,
+      quantidadeEstoque: 0,
+      valor: 0
+    }
 
+    item = itemCarrinho.value;
+
+    this.cart.push(item)
+    console.log(item);
 
   }
 

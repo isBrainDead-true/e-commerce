@@ -30,8 +30,9 @@
 
                                 <div class="col-3">
                                     <label for="cep" class="form-label">CEP</label>
-                                    <input formControlName="cep" required (blur)="consultaCEP($event)" style="width: 170px;"
-                                       [ngClass]="{'invalid-cep': invalidZipcode}" type="text" name="cep" id="cep" class="form-control">
+                                    <input formControlName="cep" required (blur)="consultaCEP($event)"
+                                        style="width: 170px;" [ngClass]="{'invalid-cep': invalidZipcode}" type="text"
+                                        name="cep" id="cep" class="form-control">
                                     <div *ngIf="invalidZipcode">
                                         <span class="mt-2" style="color: red;">
                                             CEP invalido

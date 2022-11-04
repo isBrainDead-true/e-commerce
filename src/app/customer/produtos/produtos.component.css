@@ -11,3 +11,11 @@
     font-weight: bold;
     font-size: 13pt;
 }
+
+.offcanvas{
+    width: 700px;
+}
+
+.bold{
+    font-weight: bold;
+}

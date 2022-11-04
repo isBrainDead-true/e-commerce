@@ -1,21 +1,88 @@
 <div class="produtos">
 
-<div *ngIf="produtos.length == 0" class="alert alert-danger">
-  <p>Nenhum produto cadastrado no momento</p>
-</div>
+  <div class="chart">
+    <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"
+      class="btn btn-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+        class="bi bi-cart-check" viewBox="0 0 16 16">
+        <path
+          d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
+        <path
+          d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+      </svg></button>
 
-  <div *ngFor="let prod of produtos" class="card me-3 mb-3" style="width: 18rem;">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Carrinho de compras</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <div>
+          <table *ngIf="cart.length > 0" class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Produto</th>
+                <th scope="col">Quantidade</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Valor Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of cart; let idx = index">
+                <th scope="row">{{ idx + 1 }}</th>
+                <td>{{ item.nome }}</td>
+                <td>{{ item.quantidade }}</td>
+                <td>{{ item.valor | currency : 'BRL' : true}}</td>
+                <td>{{ item.valor * item.quantidade | currency : 'BRL' : true}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="produtos.length == 0" class="alert alert-danger">
+    <p>Nenhum produto cadastrado no momento</p>
+  </div>
+
+  <div *ngFor="let prod of produtos" class="card me-3 mb-3 d-flex" style="width: 18rem;">
     <img [src]="prod.image" class="card-img-top" alt="...">
     <div class="card-body">
-      <h5 class="card-title">{{ prod.name }}</h5>
+      <h5 class="card-title">{{ prod.nome }}</h5>
+      <hr>
       <p class="card-text">{{ prod.descricao }}</p>
+      <hr>
       <div class="slidecontainer" [id]="prod.id">
-        <p>Quantidade:</p>
-        <input #qtde [id]="prod.id" [name]=" prod.name + prod.id  " [(ngModel)]="prod.quantidade" type="range" min="1" [max]="prod.quantidadeEstoque"
-          [value]="prod.valor"><span class="ms-4">{{ prod.quantidade == 0 ? (prod.quantidade + 1) : prod.quantidade }}</span>
+        <p>Quantidade:
+          <span class="ms-2 bold">{{ prod.quantidade == 0 ? (prod.quantidade + 1) : prod.quantidade}}</span>
+        </p>
+        <p>
+          Valor: <span class="bold card-text">{{ prod.valor * (prod.quantidade == 0 ? (prod.quantidade + 1)
+            :prod.quantidade)
+            | currency : 'BRL' : true }} </span>
+        </p>
+
+        <input class="form-range" #qtde [id]="prod.id" [name]=" prod.nome + prod.id" [(ngModel)]="prod.quantidade"
+          type="range" min="1" [max]="prod.quantidadeEstoque" [value]="prod.valor">
       </div>
-      <p class="valor card-text">{{ prod.valor * (prod.quantidade == 0 ? (prod.quantidade + 1) : prod.quantidade) | currency : 'BRL' : true  }} </p>
-      <a (click)="adicionarAoCarrinho(qtde)" class="btn btn-success">Adicionar ao carrinho</a>
+      <hr>
+      <form (ngSubmit)="adicionarAoCarrinho(item)" name="myForm" id="formulario" role="form" #item="ngForm">
+        <input style="display: none" type="text" #id="ngModel" ngModel [(ngModel)]="prod.id" name="id" />
+        <input style="display: none" type="text" #nome="ngModel" ngModel [(ngModel)]="prod.nome" name="name" name="nome"
+          [value]='prod.nome' />
+        <input style="display: none" type="text" #quantidade="ngModel" ngModel [(ngModel)]="prod.quantidade"
+          name="quantidade" name="quantidade" [value]='prod.quantidade' />
+        <input style="display: none" type="text" #valor="ngModel" ngModel [(ngModel)]="prod.valor" name="valor"
+          name="valor" [value]='prod.valor' />
+        <input style="display: none" type="text" #quantidadeEstoque="ngModel" ngModel
+          [(ngModel)]="prod.quantidadeEstoque" name="quantidadeEstoque" name="quantidadeEstoque"
+          [value]='prod.quantidadeEstoque' />
+        <button type="submit" class="btn btn-success justify-content-center">Adicionar ao carrinho</button>
+      </form>
+
+
+
     </div>
   </div>
 
@@ -24,7 +91,8 @@
 <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
   <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
-      <img src="https://freeiconshop.com/wp-content/uploads/edd/checkmark-flat.png" height="20px" width="20px" class="rounded me-2" alt="...">
+      <img src="https://freeiconshop.com/wp-content/uploads/edd/checkmark-flat.png" height="20px" width="20px"
+        class="rounded me-2" alt="...">
       <strong class="me-auto">Carrinho de compras</strong>
       <small>Agora mesmo</small>
       <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
