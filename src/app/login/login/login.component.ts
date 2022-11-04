@@ -21,10 +21,10 @@ export class LoginComponent implements OnInit {
     private nav: NavbarService,
     private http: HttpClient,
     private customerService: CustomerService) {
-    
+
   }
 
-  public credentials = {username: "", password: ""};
+  public credentials = { username: "", password: "" };
   public sessionId: string = "";
 
   ngOnInit() {
@@ -41,26 +41,41 @@ export class LoginComponent implements OnInit {
   addUsuario(addForm: NgForm): void {
     document.getElementById("close")?.click();
     this.customerService.AddCustomer(addForm.value).subscribe(
-      (Response: Customer) => { alert("Conta Criada com sucesso") },
+      (Response: Customer) => {
+
+        let btn = document.getElementById('btnAccountCreated');
+        btn?.click();
+
+      },
       (error: HttpErrorResponse) => { }
     );
+    addForm.reset();
   }
 
-  
+
   login() {
-      let url = environment.url + "login";
-      this.http.post<any>(url, {
-        username: this.credentials.username,
-        password: this.credentials.password
-      }).subscribe(res => {
-        if(res){
-          this.sessionId = res.sessionID;
-          sessionStorage.setItem('token', this.sessionId);
-          this.router.navigate(['customerpage/c-profile']);
-        }else{
-          alert("Falha ao realizar o login");
-        }
-      })
+    let url = environment.url + "login";
+    this.http.post<any>(url, {
+      username: this.credentials.username,
+      password: this.credentials.password
+    }).subscribe(res => {
+      if (res) {
+        this.sessionId = res.sessionID;
+        sessionStorage.setItem('token', this.sessionId);
+        this.router.navigate(['customerpage/c-profile']);
+      }
+      (error: HttpErrorResponse) => {
+        let title = document.getElementById('exampleModalLabel');
+        title!.innerHTML = "Acesso a conta";
+
+        let body = document.getElementById('modalBody');
+        body!.innerHTML = "Usuario ou senha inválidos";
+
+        let btn = document.getElementById('btnAccountCreated');
+        btn?.click();
+        console.log('a')
+      }
+    })
   }
 }
 

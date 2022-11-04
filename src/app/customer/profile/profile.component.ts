@@ -47,14 +47,20 @@ export class ProfileComponent implements OnInit {
     }
   };
 
+  invalidZipcode: boolean = false;
+
   consultaCEP(event: Event): void {
 
     let pattern = /^[0-9]{8}$/;
     let zipcode = (event.target as HTMLInputElement).value;
+    zipcode = zipcode.replace(/\.|\-/g, '');
     console.log(zipcode);
 
     if (pattern.test(zipcode)) {
       this.http.get<endereco>(`https://viacep.com.br/ws/${zipcode}/json/`).subscribe(dados => this.fillform(dados));
+      this.invalidZipcode = false;
+    }else{
+      this.invalidZipcode = true;
     }
 
   }
@@ -112,7 +118,8 @@ export class ProfileComponent implements OnInit {
 
 
         } else {
-          alert("Por gentileza complete o seu perfil")
+          let btn = document.getElementById('btn-warning');
+          btn?.click();
         }
       }
       );
@@ -130,7 +137,13 @@ export class ProfileComponent implements OnInit {
 
 
     this.customerService.updateCustomerInfo(this.customerInUse.id, this.customerInUse).subscribe(
-      (Response: Customer) => { alert("dados alterados com sucesso") },
+      (Response: Customer) => {
+
+        let modalBody = document.getElementById('modalBody');
+        modalBody!.innerHTML = "Dados atualizados com sucesso";
+        let btn = document.getElementById('btn-warning');
+        btn?.click();
+      },
       (error: HttpErrorResponse) => { }
     );
     console.log(this.customerInUse)
