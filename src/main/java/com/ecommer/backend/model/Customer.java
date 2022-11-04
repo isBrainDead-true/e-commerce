@@ -21,6 +21,8 @@ public class Customer extends CurrentUserApp {
 
     private String name;
     private String cpf;
+    private String email;
+    private String phone;
 
     @Embedded
     private Address address;
