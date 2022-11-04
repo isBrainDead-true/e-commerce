@@ -12,11 +12,25 @@
       <div class="slidecontainer" [id]="prod.id">
         <p>Quantidade:</p>
         <input #qtde [id]="prod.id" [name]=" prod.name + prod.id  " [(ngModel)]="prod.quantidade" type="range" min="1" [max]="prod.quantidadeEstoque"
-          [value]="prod.valor"><span class="ms-4" *ngIf="prod.quantidade == 0 ? (prod.quantidade + 1) : prod.quantidade  ">{{ prod.quantidade }}</span>
+          [value]="prod.valor"><span class="ms-4">{{ prod.quantidade == 0 ? (prod.quantidade + 1) : prod.quantidade }}</span>
       </div>
-      <p class="valor card-text">{{ prod.valor * prod.quantidade | currency : 'BRL':true  }} </p>
-      <a href="#" class="btn btn-success">Adicionar ao carrinho</a>
+      <p class="valor card-text">{{ prod.valor * (prod.quantidade == 0 ? (prod.quantidade + 1) : prod.quantidade) | currency : 'BRL' : true  }} </p>
+      <a (click)="adicionarAoCarrinho(qtde)" class="btn btn-success">Adicionar ao carrinho</a>
     </div>
   </div>
 
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="https://freeiconshop.com/wp-content/uploads/edd/checkmark-flat.png" height="20px" width="20px" class="rounded me-2" alt="...">
+      <strong class="me-auto">Carrinho de compras</strong>
+      <small>Agora mesmo</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      O item foi adicionado ao carrinho
+    </div>
+  </div>
 </div>
