@@ -1,21 +1,29 @@
-.produtos{
+.produtos {}
 
-}
-
-.card{
+.card {
     float: left;
 }
 
-.valor{
-    color:  rgb(255,101,0);
+.valor {
+    color: rgb(255, 101, 0);
     font-weight: bold;
     font-size: 13pt;
 }
 
-.offcanvas{
+.offcanvas {
     width: 700px;
 }
 
-.bold{
+.bold {
     font-weight: bold;
+}
+
+.btn-cart{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+.trash{
+    cursor: pointer;
 }

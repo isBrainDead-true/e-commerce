@@ -18,8 +18,9 @@ export class ProdutosComponent implements OnInit {
   prod: produto | any;
   bootstrap: any;
   cart: produto[] = [];
+  total: number = 0;
 
-  formulario = this.fb.group({
+    formulario = this.fb.group({
     id: [''],
     nome: [''],
     quantidade: [''],
@@ -66,7 +67,18 @@ export class ProdutosComponent implements OnInit {
 
     this.cart.push(item)
     console.log(item);
+    this.total = this.total + (item.valor * item.quantidade);
 
+  }
+
+  removeFromCart(id: string){
+    for(let i = 0; i <= this.cart.length -1; i++){
+      if (this.cart[i].id === id){
+        this.total = this.total - (this.cart[i].valor * this.cart[i].quantidade)
+        this.cart.splice(i, 1);
+        console.log(this.cart);
+      }
+    }
   }
 
 
