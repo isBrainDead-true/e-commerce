@@ -1,5 +1,6 @@
 package com.ecommer.backend.model;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,15 +22,16 @@ public class Pedido {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private Customer customer;
+    private Customer cliente;
 
-    @OneToMany
-    private List<Produto> produtosPedido;
+    @OneToOne
+    @NotNull
+    private Item itensPedido;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date dataPedido;
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Date data;
 
-    private String formaPagamento;
+    private int formaPagamento;
 
-    private double valorTotalPedido;
+    private double totalPedido;
 }

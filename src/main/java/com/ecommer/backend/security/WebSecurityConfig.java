@@ -45,7 +45,8 @@ public class WebSecurityConfig {
                 "/api/v1/customer/get/user",
                 "/api/v1/produto/new",
                 "/api/v1/produto/all",
-                "/api/v1/customer/update/profile/**"
+                "/api/v1/customer/update/profile/**",
+                "/api/v1/order/**"
         };
 
         //Resolving CORS
