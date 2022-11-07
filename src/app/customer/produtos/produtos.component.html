@@ -13,7 +13,8 @@
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
         <h5 *ngIf="cart.length > 0" class="offcanvas-title" id="offcanvasExampleLabel">Carrinho de compras</h5>
-        <button id="close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button id="close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+          aria-label="Close"></button>
       </div>
       <div *ngIf="cart.length == 0" class="alert alert-danger">Você não possui nenhum item adicionado ao carrinho</div>
       <div *ngIf="cart.length > 0" class="offcanvas-body">
@@ -73,15 +74,18 @@
   </div>
 
   <div *ngFor="let prod of produtos" class="card me-3 mb-3 d-flex" style="width: 18rem;">
-    <img [src]="prod.image" class="card-img-top" alt="...">
+    <img [ngClass]="{'fadeImgItem': prod.quantidadeEstoque <= 0 }" [src]="prod.image" class="card-img-top" alt="...">
     <div class="card-body">
       <h5 class="card-title">{{ prod.nome }}</h5>
       <hr>
       <p class="card-text">{{ prod.descricao }}</p>
       <hr>
       <div class="slidecontainer" [id]="prod.id">
-        <p>Quantidade:
+        <p *ngIf="prod.quantidadeEstoque > 0">Qantidade:
           <span class="ms-2 bold">{{ prod.quantidade == 0 ? (prod.quantidade + 1) : prod.quantidade}}</span>
+        </p>
+        <p *ngIf="prod.quantidadeEstoque <= 0">
+          <span style="color: red" class="ms-2 bold">Sem estoque</span>
         </p>
         <p>
           Valor: <span class="bold card-text">{{ prod.valor * (prod.quantidade == 0 ? (prod.quantidade + 1)
@@ -104,7 +108,8 @@
         <input style="display: none" type="text" #quantidadeEstoque="ngModel" ngModel
           [(ngModel)]="prod.quantidadeEstoque" name="quantidadeEstoque" name="quantidadeEstoque"
           [value]='prod.quantidadeEstoque' />
-        <button type="submit" class="btn btn-success justify-content-center">Adicionar ao carrinho</button>
+        <button type="submit" [disabled]="prod.quantidadeEstoque <= 0"
+          class="btn btn-success justify-content-center">Adicionar ao carrinho</button>
       </form>
 
 
@@ -129,26 +134,25 @@
   </div>
 </div>
 
-        <!-- Button trigger modal -->
-        <button type="button" id="btn-warning" style="display: none" class="btn btn-primary" data-bs-toggle="modal"
-            data-bs-target="#accountCreated">
-        </button>
+<!-- Button trigger modal -->
+<button type="button" id="btn-warning" style="display: none" class="btn btn-primary" data-bs-toggle="modal"
+  data-bs-target="#accountCreated">
+</button>
 
-        <!-- Modal -->
-        <div class="modal fade" id="accountCreated" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Carrinho de compras</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div id="modalBody" class="modal-body">
-                        Compra Realizada com sucesso
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- Modal -->
+<div class="modal fade" id="accountCreated" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Carrinho de compras</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div id="modalBody" class="modal-body">
+        Compra Realizada com sucesso
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

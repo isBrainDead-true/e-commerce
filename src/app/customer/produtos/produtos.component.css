@@ -29,3 +29,8 @@
     color: red;
 }
 
+.fadeImgItem{
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+}
+
