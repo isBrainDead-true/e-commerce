@@ -26,4 +26,6 @@
 
 .trash{
     cursor: pointer;
+    color: red;
 }
+

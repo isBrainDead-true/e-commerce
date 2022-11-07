@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Customer } from '../model/Customer';
+import { produto } from '../model/produto';
 
 
 @Injectable({
@@ -32,6 +33,14 @@ export class CustomerService {
 
   deleteCustomer(id: number): Observable<void>{
     return this.http.delete<void>(`${this.apiURL}customer/delete/${id}`)
+  }
+
+  getCustomerBySessionId(sessionId: string): Observable<Customer>{
+    return this.http.get<Customer>(`${this.apiURL}customer/get/user/${sessionId}`)
+  }
+
+  purchase(clientId: string, forma_pagamento: string , totalPedido: string, produtos: produto[]): Observable<any>{
+    return this.http.post(`http://localhost:8080/api/v1/order/new/${clientId}/${forma_pagamento}/${totalPedido}`, produtos );
   }
 
 }

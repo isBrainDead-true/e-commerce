@@ -1,7 +1,9 @@
+import { Router } from '@angular/router';
+import { CustomerService } from 'src/app/services/customer.service';
+import { produto } from './../../model/produto';
 import { NgForm, FormBuilder } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { produto } from 'src/app/model/produto';
 import { ProdutoService } from 'src/app/services/produto.service';
 import { Toast } from 'bootstrap'
 import * as bootstrap from 'bootstrap';
@@ -16,11 +18,18 @@ export class ProdutosComponent implements OnInit {
   qtdeEscolhido: number = 1;
   produtos: produto[] = [];
   prod: produto | any;
-  bootstrap: any;
   cart: produto[] = [];
   total: number = 0;
 
-    formulario = this.fb.group({
+  pedido: any = {
+    cliente: {},
+    data: '',
+    produtos: [],
+    totalPedido: 0,
+    formaPagamento: 0,
+  }
+
+  formulario = this.fb.group({
     id: [''],
     nome: [''],
     quantidade: [''],
@@ -28,7 +37,11 @@ export class ProdutosComponent implements OnInit {
     quantidadeEstoque: [''],
   })
 
-  constructor(private service: ProdutoService, private fb: FormBuilder) { }
+  constructor(
+    private service: ProdutoService,
+    private fb: FormBuilder,
+    private customerService: CustomerService,
+    private router: Router) { }
 
   getProdutos(): void {
     this.service.getProdutos().subscribe(
@@ -71,14 +84,33 @@ export class ProdutosComponent implements OnInit {
 
   }
 
-  removeFromCart(id: string){
-    for(let i = 0; i <= this.cart.length -1; i++){
-      if (this.cart[i].id === id){
+  removeFromCart(id: string) {
+    for (let i = 0; i <= this.cart.length - 1; i++) {
+      if (this.cart[i].id === id) {
         this.total = this.total - (this.cart[i].valor * this.cart[i].quantidade)
         this.cart.splice(i, 1);
-        console.log(this.cart);
+        break;
       }
     }
+  }
+
+  purchase() {
+    let id = sessionStorage.getItem('id') || '';
+    this.pedido.produtos = this.cart; // body
+    let totalPedido = "" + this.total;
+    let forma_pagamento = (document.querySelector('input[name=form_pagamento]:checked') as HTMLInputElement).value
+    let btnCloseCanvas = document.getElementById('close');
+    let btnModal = document.getElementById('btn-warning');
+
+    this.customerService.purchase(id, forma_pagamento, totalPedido, this.pedido.produtos)
+      .subscribe(res => {
+        console.log(res)
+        this.cart = [];
+        btnCloseCanvas?.click();
+        btnModal?.click();
+      })
+
+
   }
 
 

@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit {
     private nav: NavbarService,
     private http: HttpClient,
     private customerService: CustomerService) {
-
   }
 
   public credentials = { username: "", password: "" };
@@ -61,6 +60,12 @@ export class LoginComponent implements OnInit {
       if (res) {
         this.sessionId = res.sessionID;
         sessionStorage.setItem('token', this.sessionId);
+ 
+        this.customerService.getCustomerBySessionId(this.sessionId)
+        .subscribe(res => {
+          sessionStorage.setItem('id', res.id);
+        });
+
         this.router.navigate(['customerpage/c-profile']);
       }
       (error: HttpErrorResponse) => {
