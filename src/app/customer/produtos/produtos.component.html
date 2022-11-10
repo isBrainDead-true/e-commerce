@@ -85,7 +85,7 @@
           <span class="ms-2 bold">{{ prod.quantidade == 0 ? (prod.quantidade + 1) : prod.quantidade}}</span>
         </p>
         <p *ngIf="prod.quantidadeEstoque <= 0">
-          <span style="color: red" class="ms-2 bold">Sem estoque</span>
+          <span style="color: red" class="ms-2 bold">Produto Indisponivel</span>
         </p>
         <p>
           Valor: <span class="bold card-text">{{ prod.valor * (prod.quantidade == 0 ? (prod.quantidade + 1)

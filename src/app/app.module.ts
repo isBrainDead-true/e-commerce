@@ -17,6 +17,7 @@ import { ProfileComponent } from './customer/profile/profile.component';
 import { DEFAULT_CURRENCY_CODE, LOCALE_ID } from '@angular/core';
 import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
+import { PurchaseHistoryComponent } from './customer/purchase-history/purchase-history.component';
 registerLocaleData(ptBr);
 
 
@@ -30,6 +31,7 @@ registerLocaleData(ptBr);
     HomeComponent,
     ProdutosComponent,
     ProfileComponent,
+    PurchaseHistoryComponent,
   ],
   imports: [
     FormsModule,

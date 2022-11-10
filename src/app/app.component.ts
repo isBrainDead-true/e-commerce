@@ -1,3 +1,4 @@
+import { environment } from './../environments/environment.prod';
 import { NavbarService } from './services/navbar.service';
 import { LoginComponent } from './login/login/login.component';
 import { ActivatedRoute, RouterModule, RouterStateSnapshot, UrlTree } from '@angular/router';
@@ -13,6 +14,8 @@ export class AppComponent {
   title = 'cupcake-store';
 
   display: boolean = false;
+
+  url_prod = environment.url;
 
   constructor(private nav: NavbarService){
 

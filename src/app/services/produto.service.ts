@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 import { produto } from '../model/produto';
 
 @Injectable({
@@ -9,11 +9,12 @@ import { produto } from '../model/produto';
 })
 export class ProdutoService {
 
-  private apiURL: string = environment.url;
+
+  url_prod = environment.url;
 
   constructor(private http: HttpClient) { }
 
   getProdutos(): Observable<produto[]>{
-    return this.http.get<produto[]>(`${this.apiURL}produto/all`)
+    return this.http.get<produto[]>(`${this.url_prod}/produto/all`)
   }
 }

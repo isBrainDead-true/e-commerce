@@ -6,7 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { Customer } from 'src/app/model/Customer';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 
 
 @Component({
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
 
 
   login() {
-    let url = environment.url + "login";
+    let url = environment.url + "/login";
     this.http.post<any>(url, {
       username: this.credentials.username,
       password: this.credentials.password

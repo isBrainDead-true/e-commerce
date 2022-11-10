@@ -97,7 +97,7 @@ export class ProdutosComponent implements OnInit {
   purchase() {
     let id = sessionStorage.getItem('id') || '';
     this.pedido.produtos = this.cart; // body
-    let totalPedido = "" + this.total;
+    let totalPedido = this.total.toString();
     let forma_pagamento = (document.querySelector('input[name=form_pagamento]:checked') as HTMLInputElement).value
     let btnCloseCanvas = document.getElementById('close');
     let btnModal = document.getElementById('btn-warning');
@@ -108,6 +108,7 @@ export class ProdutosComponent implements OnInit {
         this.cart = [];
         btnCloseCanvas?.click();
         btnModal?.click();
+        this.total = 0;
       })
 
 

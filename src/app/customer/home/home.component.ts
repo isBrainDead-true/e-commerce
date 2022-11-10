@@ -1,5 +1,6 @@
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
+import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private nav: NavbarService) { }
 
   ngOnInit(): void {
   }
@@ -17,6 +18,7 @@ export class HomeComponent implements OnInit {
 
   logout() : void {
     sessionStorage.clear();
+    this.nav.displayNavbar.emit(true);
     this.router.navigate(['']);
   }
 

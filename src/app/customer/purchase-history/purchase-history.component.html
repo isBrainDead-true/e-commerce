@@ -1,0 +1,28 @@
+<div *ngIf=" historico.length == 0 " class="alert alert-info">
+  Você ainda não realizou nenhuma compra.
+</div>
+
+<div *ngIf=" historico.length > 0 "class="container">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Data</th>
+            <th scope="col">Forma de pagamento</th>
+            <th scope="col">Valor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of historico">
+            <th scope="row"> {{ item.numeroPed }}</th>
+            <td>{{ item.data | date:'short' }}</td>
+            <td >
+              <span *ngIf="item.formaPagamento === 1 ">PIX</span>
+              <span *ngIf="item.formaPagamento === 2 ">Débito</span>
+              <span *ngIf="item.formaPagamento === 3 ">Crédito</span>
+            </td>
+            <td>{{ item.totalPedido | currency : 'BRL' : 'symbol-narrow'}}</td>
+          </tr>
+        </tbody>
+      </table>
+</div>

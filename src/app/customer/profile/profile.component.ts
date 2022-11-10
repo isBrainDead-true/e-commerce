@@ -80,7 +80,7 @@ export class ProfileComponent implements OnInit {
   getCurrentUser() {
     let currentCustomer: Customer;
     let tkn = sessionStorage.getItem("token");
-    this.http.get<Customer>(`http://localhost:8080/api/v1/customer/get/user/${tkn}`)
+    this.http.get<Customer>(`https://e-commerce-368017.rj.r.appspot.com/api/v1/customer/get/user/${tkn}`)
       .subscribe(response => {
 
         this.customerInUse.id = response.id;

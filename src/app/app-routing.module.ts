@@ -1,3 +1,4 @@
+import { PurchaseHistoryComponent } from './customer/purchase-history/purchase-history.component';
 import { ProdutosComponent } from './customer/produtos/produtos.component';
 import { ProfileComponent } from './customer/profile/profile.component';
 import { SectionComponent } from './homepage/section/section.component';
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'customerpage', component: HomeComponent, children: [
     { path: 'c-profile', component:  ProfileComponent },
     { path: 'produtos', component: ProdutosComponent },
+    { path: 'historico', component: PurchaseHistoryComponent }
     //{ path: 'componentC', component: CComponent } },
   ]}
 ];
