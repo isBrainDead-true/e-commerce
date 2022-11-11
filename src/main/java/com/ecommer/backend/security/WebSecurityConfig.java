@@ -16,9 +16,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -46,7 +50,9 @@ public class WebSecurityConfig {
                 "/api/v1/produto/new",
                 "/api/v1/produto/all",
                 "/api/v1/customer/update/profile/**",
-                "/api/v1/order/**"
+                "/api/v1/order/**",
+                "/35.199.71.35",
+                "/35.199.71.35/**"
         };
 
         //Resolving CORS
@@ -56,12 +62,6 @@ public class WebSecurityConfig {
         http.exceptionHandling().authenticationEntryPoint((request, response, authException)
                 -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage())).and();
 
-
-        //Allow H2 Database Connection
-        //http.authorizeRequests().antMatchers("/h2-console/**");
-        //http.headers().frameOptions().disable();
-
-        //Normal Filter Chain
         http
                 .authorizeRequests()
                 .antMatchers(allowed_resources).permitAll()
@@ -89,6 +89,18 @@ public class WebSecurityConfig {
                         }
         );
         return authConfig.getAuthenticationManager();
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource()
+    {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST", "OPTIONS", "DELETE", "HEAD", "PUT", "PATCH"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
 

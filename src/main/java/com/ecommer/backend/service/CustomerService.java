@@ -18,8 +18,11 @@ public class CustomerService {
     private final CustomerRepository repository;
     private final AuthorityRepository authorityRepository;
 
+    private final CurrentUserService userService;
+
 
     public Customer create(Customer customer){
+
         String EncryptedPassword = new BCryptPasswordEncoder().encode(customer.getPassword());
         customer.setPassword(EncryptedPassword);
         Authority role_cliente = new Authority();

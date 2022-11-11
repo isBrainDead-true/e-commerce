@@ -5,6 +5,7 @@ import com.ecommer.backend.profile.CurrentUserApp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
@@ -32,6 +33,7 @@ public class Customer extends CurrentUserApp {
     private Authority role;
 
     @OneToMany
+    @JsonIgnore
     private List<Pedido> pedidos;
 
 

@@ -14,13 +14,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/")
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class PedidoController {
 
     private final PedidoService pedidoService;
@@ -29,10 +30,10 @@ public class PedidoController {
 
     private final ItemService itemService;
 
-    @PostMapping("order/new/{clienteId}/{totalPedido}/{formaPagamento}")
+    @PostMapping("order/new/{clienteId}/{formaPagamento}/{totalPedido}")
     public ResponseEntity<Pedido> realizarCompra(@PathVariable String clienteId,
-                                         @PathVariable String totalPedido,
                                          @PathVariable String formaPagamento,
+                                         @PathVariable String totalPedido,
                                          @RequestBody List<Produto> produtosCarrinho){
 
 
@@ -41,7 +42,8 @@ public class PedidoController {
         Pedido compra = new Pedido();
         compra.setCliente(cliente.get());
         compra.setTotalPedido(Float.parseFloat(totalPedido));
-        compra.setFormaPagamento(Integer.parseInt(totalPedido));
+        compra.setFormaPagamento(Integer.parseInt(formaPagamento));
+        compra.setData(new Date());
 
         List<Produto> produtosPedido = new ArrayList<>();
         List<Pedido> ped = new ArrayList<>();
@@ -55,6 +57,7 @@ public class PedidoController {
 
         }
         Item itensPedido = new Item();
+
         itemService.salvar(itensPedido);
 
         compra.setItensPedido(itensPedido);
@@ -65,6 +68,13 @@ public class PedidoController {
         customerService.create(cliente.get());
 
         return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    @GetMapping("/order/historico/{id}")
+    public ResponseEntity<List<Pedido>> historico(@PathVariable String id){
+        Long idCliente = Long.parseLong(id);
+        List<Pedido> pedidosCliente = pedidoService.historico(idCliente);
+        return new ResponseEntity<List<Pedido>>(pedidosCliente, HttpStatus.OK);
     }
 
 }

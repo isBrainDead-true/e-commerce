@@ -15,7 +15,7 @@ public class Authority implements GrantedAuthority {
     private Long id;
     private String role;
 
-    @ManyToOne(targetEntity = CurrentUserApp.class)
+    @ManyToOne(targetEntity = CurrentUserApp.class  )
     private Set<CurrentUserApp> users;
 
     @Override

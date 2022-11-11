@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Columns;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -12,7 +13,6 @@ import java.util.List;
 
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 public class Pedido {
 
@@ -20,9 +20,12 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    public static int sequencia = 241998;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer cliente;
+    private int numeroPed = 0;
 
     @OneToOne
     @NotNull
@@ -34,4 +37,9 @@ public class Pedido {
     private int formaPagamento;
 
     private double totalPedido;
+
+    public Pedido(){
+        this.numeroPed = sequencia;
+        sequencia++;
+    }
 }
