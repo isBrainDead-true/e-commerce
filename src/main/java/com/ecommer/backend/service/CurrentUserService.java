@@ -19,7 +19,7 @@ public class CurrentUserService implements UserDetailsService {
     @Override
     public CurrentUserApp loadUserByUsername(String username) throws UsernameNotFoundException {
         CurrentUserApp currentUserApp = repository.findByUsername(username);
-        if (currentUserApp == null) System.out.println("a");
+        if (currentUserApp == null) System.out.println("Usuario não encontrado");
         return currentUserApp;
     }
 
