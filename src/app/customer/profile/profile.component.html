@@ -22,11 +22,11 @@
                             </div>
                             <div class="col-6">
                                 <label for="telefone" class="form-label">Telefone</label>
-                                <input formControlName="telefone" type="text" name="telefone" class="form-control"
-                                    id="telefone">
+                                <input formControlName="telefone" type="text" name="telefone" class="form-control" id="telefone">
+                                <small style="color: red;" *ngIf="formulario.get('telefone')?.errors && formulario.get('telefone')?.touched" >Somente números</small>
                             </div>
                             <hr class="mt-3">
-                            <legend class="mt-2">Endereço</legend>
+                            <legend class="mt-2">Endereço</legend>  
                             <div class="row mb-3">
 
                                 <div class="col-3">
@@ -61,9 +61,10 @@
                                         class="form-control" id="rua">
                                 </div>
                                 <div class="col-3">
-                                    <label for="numero" class="form-label">Numero</label>
+                                    <label for="numero" class="form-label">Número</label>
                                     <input formControlName="numero" value="" name="numero" type="text" name="numero"
                                         class="form-control" id="numero">
+                                        <small style="color: red;" *ngIf="formulario.get('numero')?.errors && formulario.get('numero')?.touched" >Somente números</small>
                                 </div>
                                 <hr class="mt-4">
 
@@ -94,7 +95,7 @@
                         Por gentileza complete seu cadastro para poder realizar a primeira compra.
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
                     </div>
                 </div>
             </div>

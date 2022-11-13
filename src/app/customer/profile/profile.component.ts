@@ -24,10 +24,10 @@ export class ProfileComponent implements OnInit {
     rua: "",
     bairro: [''],
     estado: [''],
-    numero: [''],
+    numero: ['', Validators.pattern(/^[0-9.]+$/)],
     email: [''],
     cpf: ['', [Validators.pattern(/^[0-9.]+$/), Validators.required, Validators.minLength(11), Validators.maxLength(11)] ],
-    telefone: ['']
+    telefone: ['', Validators.pattern(/^[0-9.]+$/)]
   })
 
   customerInUse: Customer = {
