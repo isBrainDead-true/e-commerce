@@ -57,30 +57,39 @@ export class LoginComponent implements OnInit {
       username: this.credentials.username,
       password: this.credentials.password
     }).subscribe(res => {
+
       if (res) {
         this.sessionId = res.sessionID;
         sessionStorage.setItem('token', this.sessionId);
- 
+
         this.customerService.getCustomerBySessionId(this.sessionId)
-        .subscribe(res => {
-          sessionStorage.setItem('id', res.id);
-        });
+          .subscribe(res => {
+            sessionStorage.setItem('id', res.id);
+          });
 
         this.router.navigate(['customerpage/c-profile']);
       }
-      (error: HttpErrorResponse) => {
-        let title = document.getElementById('exampleModalLabel');
-        title!.innerHTML = "Acesso a conta";
+      
+    },
+    (error: HttpErrorResponse) => {
+      
+      let title = document.getElementById('exampleModalLabel');
+      title!.innerHTML = "Acesso a conta";
 
-        let body = document.getElementById('modalBody');
-        body!.innerHTML = "Usuario ou senha inválidos";
+      let body = document.getElementById('modalBody');
+      body!.innerHTML = "Usuario ou senha inválidos<br>";
+      let httpErroMessage = document.createElement('small')
+      httpErroMessage.innerHTML = `${error.status} &nbsp Não autorizado`
+      body!.appendChild(httpErroMessage);
 
-        let btn = document.getElementById('btnAccountCreated');
-        btn?.click();
-        console.log('a')
-      }
-    })
+      let btn = document.getElementById('btnAccountCreated');
+      btn?.click();
+
+    });
+
   }
+
+
 }
 
 
