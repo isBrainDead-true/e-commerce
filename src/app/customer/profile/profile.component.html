@@ -6,7 +6,7 @@
                 <div class="form ">
                     <form [formGroup]="formulario" #f="ngForm" ngDefaultControl name="myForm" id="formulario"
                         role="form">
-                        <div class="d-flex justify-content-end"><button type="submit"
+                        <div class="d-flex justify-content-end"><button [disabled]="formulario.get('cpf')?.errors || formulario.get('cep')?.errors" type="submit"
                                 class="btn btn-success btn-login mt-4" (click)="updateProfile()">Atualizar</button>
                         </div>
                         <div class="row">
