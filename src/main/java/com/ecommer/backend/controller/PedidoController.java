@@ -65,9 +65,12 @@ public class PedidoController {
         pedidoService.realizarCompra(compra);
 
         cliente.get().getPedidos().add(compra);
-        customerService.create(cliente.get());
+        System.out.println(cliente.get().getPassword());
+        customerService.update(Long.parseLong(clienteId), cliente.get());
 
+        System.out.println(cliente.get().getPassword());
         return new ResponseEntity<>(null, HttpStatus.OK);
+
     }
 
     @GetMapping("/order/historico/{id}")

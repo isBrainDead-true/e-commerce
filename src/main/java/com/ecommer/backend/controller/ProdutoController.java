@@ -29,4 +29,9 @@ public class ProdutoController {
         Produto pr = service.create(prod);
         return new ResponseEntity<Produto>(pr, HttpStatus.OK);
     }
+
+    @GetMapping("deleteAll")
+    public void deleteAllProducts(){
+        service.deleteAll();
+    }
 }

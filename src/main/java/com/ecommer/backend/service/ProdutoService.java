@@ -34,4 +34,7 @@ public class ProdutoService {
         return repository.findAll();
     }
 
+    public void deleteAll() {
+        this.repository.deleteAll();
+    }
 }

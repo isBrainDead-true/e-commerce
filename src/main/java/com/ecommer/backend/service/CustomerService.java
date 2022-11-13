@@ -42,6 +42,7 @@ public class CustomerService {
         tmp.get().setEmail(atualizado.getEmail());
         tmp.get().setCpf(atualizado.getCpf());
         tmp.get().setPhone(atualizado.getPhone());
+        tmp.get().setPedidos(atualizado.getPedidos());
         return this.repository.save(tmp.get());
     }
 

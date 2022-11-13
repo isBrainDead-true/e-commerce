@@ -45,10 +45,12 @@ public class WebSecurityConfig {
         final String[] allowed_resources = {
                 "/api/v1/login",
                 "/h2-console/**",
+                "/api/v1/customer/**",
                 "/api/v1/customer/register",
                 "/api/v1/customer/get/user",
                 "/api/v1/produto/new",
                 "/api/v1/produto/all",
+                "/api/v1/produto/deleteAll",
                 "/api/v1/customer/update/profile/**",
                 "/api/v1/order/**",
                 "/35.199.71.35",
