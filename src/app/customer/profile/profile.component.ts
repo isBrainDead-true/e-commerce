@@ -4,7 +4,7 @@ import { endereco } from './../../model/endereco';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { Form, FormBuilder, FormControl, NgForm, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { Form, FormBuilder, FormControl, NgForm, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
 import { getLocaleDayPeriods, JsonPipe } from '@angular/common';
 import { CustomerService } from 'src/app/services/customer.service';
 
@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit {
     estado: [''],
     numero: [''],
     email: [''],
-    cpf: [''],
+    cpf: ['', [Validators.pattern(/^[0-9.]+$/), Validators.required, Validators.minLength(11), Validators.maxLength(11)] ],
     telefone: ['']
   })
 
@@ -132,7 +132,7 @@ export class ProfileComponent implements OnInit {
     this.customerInUse.address.estate = this.formulario.controls['estado'].value || "";
     this.customerInUse.address.neighbor = this.formulario.controls['bairro'].value || "";
     this.customerInUse.email = this.formulario.controls['email'].value || "";
-    this.customerInUse.cpf = this.formulario.controls['cpf'].value || "";
+    this.customerInUse.cpf = this.formulario.controls['cpf'].value?.toString() || "";
     this.customerInUse.phone = this.formulario.controls['telefone'].value || "";
 
 
